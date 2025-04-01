@@ -20,11 +20,18 @@ for root, _, files in os.walk(src_folder):
         if not file.endswith(".class"):
             shutil.copy2(os.path.join(root, file), os.path.join(target_dir, file))
 
-# try:
-#     subprocess.run(["git", "add", "-A"], check=True, cwd=repo_folder)
-#     subprocess.run(["git", "commit", "-m", folder_name], check=True, cwd=repo_folder)
-#     subprocess.run(["git", "push", "-u", "origin", "main"], check=True, cwd=repo_folder)
+try:
+    subprocess.run(["git", "add", "-A"], check=True, cwd=repo_folder)
+    subprocess.run(["git", "commit", "-m", folder_name], check=True, cwd=repo_folder)
+    subprocess.run(["git", "push", "-u", "origin", "main"], check=True, cwd=repo_folder)
 
-#     print("Changes pushed successfully!")
-# except subprocess.CalledProcessError as e:
-#     print(f"Error: {e}")
+    print("Changes pushed successfully!")
+except subprocess.CalledProcessError as e:
+    print(f"Error: {e}")
+
+for item in os.listdir(src_folder):
+        item_path = os.path.join(src_folder, item)
+        if os.path.isdir(item_path):
+            shutil.rmtree(item_path)
+        else:
+            os.remove(item_path)
